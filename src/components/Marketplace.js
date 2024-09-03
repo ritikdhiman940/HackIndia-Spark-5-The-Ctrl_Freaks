@@ -21,11 +21,7 @@ export default function Marketplace() {
             "name": "NFT#2",
             "description": "Second NFT",
             "website":"http://axieinfinity.io",
-<<<<<<< HEAD
             "image":"https://gateway.pinata.cloud/ipfs/QmZfY1YBrWc57B8a9hzF1z9W7qWCV1Jb2N1ooz6t4APdMV",
-=======
-            "image":"https://gateway.pinata.cloud/ipfs/QmSVyaqvz5jtFTyYhDGthX1czErZC75kdRcEdqVehihabN",
->>>>>>> aefa198cefa6abeba1080aa1f6099cf519cb521c
             "price":"0.03ETH",
             "currentlySelling":"True",
             "address":"0xe81Bf5A757C4f7F82a2F23b1e59bE45c33c5b13",
@@ -34,11 +30,7 @@ export default function Marketplace() {
             "name": "NFT#3",
             "description": "Third NFT",
             "website":"http://axieinfinity.io",
-<<<<<<< HEAD
             "image":"https://gateway.pinata.cloud/ipfs/QmZfY1YBrWc57B8a9hzF1z9W7qWCV1Jb2N1ooz6t4APdMV",
-=======
-            "image":"https://gateway.pinata.cloud/ipfs/QmYqNxqX59PgLPBVG6K9kaQbtbkGkLk9S577bZ8Sv5AhZ3",
->>>>>>> aefa198cefa6abeba1080aa1f6099cf519cb521c
             "price":"0.03ETH",
             "currentlySelling":"True",
             "address":"0xe81Bf5A757C4f7F82a2F23b1e59bE45c33c5b13",

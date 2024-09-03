@@ -1,38 +1,32 @@
-
 import fullLogo from '../full_logo.png';
-import {
-  BrowserRouter as Router,
-  Link,
-  useLocation
-} from "react-router-dom";
+import { Link, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 function Navbar() {
-  const [connected, toggleConnect] = useState(false);
+  const [connected, setConnected] = useState(false);
+  const [currAddress, setCurrAddress] = useState('0x');
   const location = useLocation();
-  const [currAddress, updateAddress] = useState('0x');
 
-  async function getAddress() {
-    const ethers = require("ethers");
+  const getAddress = async () => {
+    const ethers = require('ethers');
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
-    const addr = await signer.getAddress();
-    updateAddress(addr);
-  }
+    const address = await signer.getAddress();
+    setCurrAddress(address);
+  };
 
-  function updateButton() {
+  const updateButton = () => {
     const ethereumButton = document.querySelector('.enableEthereumButton');
-    ethereumButton.textContent = "Connected";
-    ethereumButton.classList.remove("hover:bg-blue-70");
-    ethereumButton.classList.remove("bg-blue-500");
-    ethereumButton.classList.add("hover:bg-green-70");
-    ethereumButton.classList.add("bg-green-500");
-  }
+    if (ethereumButton) {
+      ethereumButton.textContent = 'Connected';
+      ethereumButton.classList.remove('bg-blue-500', 'hover:bg-blue-700');
+      ethereumButton.classList.add('bg-green-500', 'hover:bg-green-700');
+    }
+  };
 
-  async function connectWebsite() {
+  const connectWebsite = async () => {
     const chainId = await window.ethereum.request({ method: 'eth_chainId' });
     if (chainId !== '0xaa36a7') { // Sepolia chain ID
-      // alert('Incorrect network! Switch your metamask network to Sepolia');
       await window.ethereum.request({
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: '0xaa36a7' }],
@@ -41,89 +35,66 @@ function Navbar() {
     await window.ethereum.request({ method: 'eth_requestAccounts' })
       .then(() => {
         updateButton();
-        console.log("Connected");
+        setConnected(true);
         getAddress();
         window.location.replace(location.pathname);
       });
-  }
+  };
 
   useEffect(() => {
     if (window.ethereum === undefined) return;
 
     const checkConnection = async () => {
-      let val = window.ethereum.isConnected();
-      if (val) {
-        console.log("Already connected");
-        getAddress();
-        toggleConnect(val);
+      const isConnected = window.ethereum.isConnected();
+      if (isConnected) {
+        await getAddress();
+        setConnected(true);
         updateButton();
       }
     };
 
     checkConnection();
 
-    window.ethereum.on('accountsChanged', function () {
+    window.ethereum.on('accountsChanged', () => {
       window.location.replace(location.pathname);
     });
   }, [location.pathname]);
 
   return (
-    <div>
-      <nav className="w-screen">
-        <ul className='flex items-end justify-between py-3 bg-transparent text-white pr-5'>
-          <li className='flex items-end ml-5 pb-2'>
-            <Link to="/">
-              <img src={fullLogo} alt="" width={120} height={120} className="inline-block -mt-2" />
-              <div className='inline-block font-bold text-xl ml-2'>
-                NFT Marketplace
-              </div>
-            </Link>
-          </li>
-          <li className='w-2/6'>
-            <ul className='lg:flex justify-between font-bold mr-10 text-lg'>
-              {location.pathname === "/" ?
-                <li className='border-b-2 hover:pb-0 p-2'>
-                  <Link to="/">Marketplace</Link>
-                </li>
-                :
-                <li className='hover:border-b-2 hover:pb-0 p-2'>
-                  <Link to="/">Marketplace</Link>
-                </li>
-              }
-              {location.pathname === "/sellNFT" ?
-                <li className='border-b-2 hover:pb-0 p-2'>
-                  <Link to="/sellNFT">List My NFT</Link>
-                </li>
-                :
-                <li className='hover:border-b-2 hover:pb-0 p-2'>
-                  <Link to="/sellNFT">List My NFT</Link>
-                </li>
-              }
-              {location.pathname === "/profile" ?
-                <li className='border-b-2 hover:pb-0 p-2'>
-                  <Link to="/profile">Profile</Link>
-                </li>
-                :
-                <li className='hover:border-b-2 hover:pb-0 p-2'>
-                  <Link to="/profile">Profile</Link>
-                </li>
-              }
-              <li>
-                <button
-                  className="enableEthereumButton bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm"
-                  onClick={connectWebsite}
-                >
-                  {connected ? "Connected" : "Connect Wallet"}
-                </button>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </nav>
-      <div className='text-white text-bold text-right mr-10 text-sm'>
-        {currAddress !== "0x" ? "Connected to" : "Not Connected. Please login to view NFTs"} {currAddress !== "0x" ? (currAddress.substring(0, 15) + '...') : ""}
+    <nav className="w-full bg-gray-900 text-white">
+      <ul className="flex items-center justify-between py-3 px-5">
+        <li className="flex items-center">
+          <Link to="/" className="flex items-center">
+            <img src={fullLogo} alt="Logo" width={120} height={120} className="mr-2" />
+            <div className="text-xl font-bold">NFT Marketplace</div>
+          </Link>
+        </li>
+        <li className="flex-grow">
+          <ul className="flex justify-center space-x-4 text-lg font-bold">
+            <li className={location.pathname === '/' ? 'border-b-2 border-white' : ''}>
+              <Link to="/">Marketplace</Link>
+            </li>
+            <li className={location.pathname === '/sellNFT' ? 'border-b-2 border-white' : ''}>
+              <Link to="/sellNFT">List My NFT</Link>
+            </li>
+            <li className={location.pathname === '/profile' ? 'border-b-2 border-white' : ''}>
+              <Link to="/profile">Profile</Link>
+            </li>
+            <li>
+              <button
+                className={`enableEthereumButton ${connected ? 'bg-green-500 hover:bg-green-700' : 'bg-blue-500 hover:bg-blue-700'} text-white font-bold py-2 px-4 rounded text-sm`}
+                onClick={connectWebsite}
+              >
+                {connected ? 'Connected' : 'Connect Wallet'}
+              </button>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <div className="text-right px-5 text-sm">
+        {currAddress !== '0x' ? `Connected to ${currAddress.substring(0, 15)}...` : 'Not Connected. Please login to view NFTs'}
       </div>
-    </div>
+    </nav>
   );
 }
 

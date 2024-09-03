@@ -5,6 +5,7 @@
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+  transition: transform 0.5s ease; /* Smooth transition for any transform changes */
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -22,10 +23,16 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  padding: 0 20px; /* Added padding for better spacing on small screens */
 }
 
 .App-link {
   color: #61dafb;
+  text-decoration: none; /* Remove underline from links */
+}
+
+.App-link:hover {
+  text-decoration: underline; /* Underline links on hover */
 }
 
 @keyframes App-logo-spin {
@@ -35,4 +42,121 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/* General button styling */
+button {
+  background-color: #3059aa;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions for background and transform */
+}
+
+button:hover {
+  background-color: #244b8a;
+  transform: scale(1.05); /* Slightly enlarge button on hover */
+}
+
+button:disabled {
+  background-color: grey;
+  cursor: not-allowed;
+  transform: none; /* Remove transform effect when disabled */
+}
+
+/* Form styling */
+form {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 600px; /* Constrain width on larger screens */
+  margin: 0 auto;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+textarea {
+  resize: vertical; /* Allow vertical resizing only */
+}
+
+/* Error message styling */
+.text-red-500 {
+  color: #e53e3e;
+}
+
+/* General page content */
+.profileClass {
+  background-color: #1e293b;
+  color: white;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+h3 {
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.flex {
+  display: flex;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mt-10 {
+  margin-top: 2.5rem;
+}
+
+.mt-11 {
+  margin-top: 2.75rem;
+}
+
+.mb-4, .mb-6, .mb-5 {
+  margin-bottom: 1rem;
+}
+
+.ml-12, .ml-20 {
+  margin-left: 3rem;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.max-w-screen-xl {
+  max-width: 1280px;
+}
+
+.shadow-md {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.shadow-lg {
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.rounded {
+  border-radius: 8px;
 }
